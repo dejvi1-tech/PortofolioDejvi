@@ -28,6 +28,16 @@ function getImage(name) {
 
 const projects = [
   {
+    key: "e-commerce",
+    title: "Mobile Shop E-commerce",
+    description:
+      "I created a simple e-commerce shop for selling phones and accessories, with a clean modern design, an admin panel to manage products, checkout and payment features, and a mobile-friendly layout so customers can browse, add to cart, and buy easily.",
+    tags: ["React", "JavaScript", "Vite"],
+    link: "https://dejvimobileshop.netlify.app/",
+    image: getImage("e-commerce"),
+    alt: "Mobile Shop E-commerce preview",
+  },
+  {
     key: "weather",
     title: "Weather App",
     description:
