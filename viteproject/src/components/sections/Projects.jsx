@@ -1,4 +1,3 @@
-import { RevealOnScroll } from "../RevealOnScroll";
 import { ProjectCard } from "../ProjectCard";
 import placeholder from "../../assets/projects/placeholder.svg";
 
@@ -123,80 +122,67 @@ export const Projects = () => {
   const otherProjects = projects.filter(p => !p.featured);
 
   return (
-    <section id="projects" className="min-h-screen flex items-center justify-center py-16 md:py-20 relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent"></div>
+    <section id="projects" className="min-h-screen py-16 md:py-20 relative">
+      {/* Simplified background for mobile */}
+      <div className="absolute inset-0 bg-black"></div>
 
-      <RevealOnScroll>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+      <div className="relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
               My Projects
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
               A showcase of my latest work and professional projects
             </p>
           </div>
 
-          {/* Latest Projects Section */}
+          {/* Latest Projects Section - Mobile First */}
           {latestProjects.length > 0 && (
-            <>
-              <div className="mb-12">
-                <div className="flex items-center justify-center mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-green-400">Latest Projects</h3>
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-
-                {/* 2x2 Grid for Latest Projects */}
-                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
-                  {latestProjects.map((p) => (
-                    <div
-                      key={p.key}
-                      className="relative transform md:hover:scale-[1.02] transition-all duration-300"
-                    >
-                      {/* Latest Badge */}
-                      <div className="absolute -top-3 -right-3 z-10">
-                        <span className="bg-green-500 text-white text-xs font-bold py-1 px-3 rounded-full shadow-lg md:animate-pulse">
-                          ✨ NEW
-                        </span>
-                      </div>
-
-                      <div className="border-2 border-green-500/20 rounded-2xl p-1 bg-green-500/10">
-                        <ProjectCard
-                          title={p.title}
-                          description={p.description}
-                          tags={p.tags}
-                          link={p.link}
-                          image={p.image}
-                          alt={p.alt}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h3 className="text-xl md:text-2xl font-bold text-green-400 mb-4">Latest Projects</h3>
               </div>
-            </>
+
+              {/* Simple Grid for Mobile */}
+              <div className="space-y-6 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8 md:space-y-0 mb-12">
+                {latestProjects.map((p) => (
+                  <div key={p.key} className="relative">
+                    {/* Simple NEW badge for mobile */}
+                    <div className="absolute top-2 right-2 z-10">
+                      <span className="bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
+                        NEW
+                      </span>
+                    </div>
+
+                    <div className="bg-gray-900 border border-green-500/30 rounded-lg p-4">
+                      <ProjectCard
+                        title={p.title}
+                        description={p.description}
+                        tags={p.tags}
+                        link={p.link}
+                        image={p.image}
+                        alt={p.alt}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
           {/* Featured Projects */}
           {featuredProjects.length > 0 && (
-            <>
-              <div className="text-center mb-12">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-blue-400">
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h3 className="text-xl md:text-2xl font-bold text-blue-400 mb-4">
                   Featured Work
                 </h3>
-                <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
+              <div className="space-y-6 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8 md:space-y-0 mb-12">
                 {featuredProjects.map((p) => (
-                  <div
-                    key={p.key}
-                    className="transform md:hover:scale-[1.02] transition-all duration-300"
-                  >
+                  <div key={p.key} className="bg-gray-900 border border-blue-500/30 rounded-lg p-4">
                     <ProjectCard
                       title={p.title}
                       description={p.description}
@@ -208,25 +194,21 @@ export const Projects = () => {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
 
           {/* Other Projects */}
           {otherProjects.length > 0 && (
-            <>
-              <div className="text-center mb-12">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-300">
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-300 mb-4">
                   Additional Projects
                 </h3>
-                <div className="w-24 h-1 bg-gradient-to-r from-gray-500 to-gray-400 mx-auto rounded-full"></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
+              <div className="space-y-6 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8 md:space-y-0 mb-12">
                 {otherProjects.map((p) => (
-                  <div
-                    key={p.key}
-                    className="transform md:hover:scale-[1.02] transition-all duration-300"
-                  >
+                  <div key={p.key} className="bg-gray-900 border border-gray-500/30 rounded-lg p-4">
                     <ProjectCard
                       title={p.title}
                       description={p.description}
@@ -238,32 +220,28 @@ export const Projects = () => {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
 
-          {/* CTA Section */}
-          <div className="text-center mt-16">
-            <div className="glass-strong p-8 rounded-2xl max-w-2xl mx-auto">
-              <h3 className="text-2xl font-bold mb-4 text-blue-400">
+          {/* Simple CTA Section */}
+          <div className="text-center">
+            <div className="bg-gray-900 border border-blue-500/30 p-6 rounded-lg max-w-2xl mx-auto">
+              <h3 className="text-xl font-bold mb-4 text-blue-400">
                 Have a Project in Mind?
               </h3>
               <p className="text-gray-300 mb-6">
-                I'm always excited to work on new and challenging projects.
                 Let's create something amazing together!
               </p>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-8 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
+                className="inline-block bg-blue-600 text-white py-3 px-6 rounded font-medium"
               >
-                <span>Let's Work Together</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                Let's Work Together
               </a>
             </div>
           </div>
         </div>
-      </RevealOnScroll>
+      </div>
     </section>
   );
 };
