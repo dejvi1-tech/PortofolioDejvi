@@ -40,6 +40,33 @@ body {
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* Mobile performance optimizations */
+  .glass,
+  .glass-strong {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  /* Reduce complex animations on mobile */
+  .animate-pulse {
+    animation-duration: 2s;
+  }
+
+  /* Optimize project cards for mobile */
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.05);
+  }
+
+  /* Improve mobile project grid */
+  #projects .grid {
+    gap: 1rem;
+  }
+
+  /* Mobile-specific project card optimizations */
+  .project-card-mobile {
+    transform: none !important;
+  }
 }
 
 @layer utilities {

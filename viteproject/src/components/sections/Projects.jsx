@@ -123,12 +123,12 @@ export const Projects = () => {
   const otherProjects = projects.filter(p => !p.featured);
 
   return (
-    <section id="projects" className="min-h-screen flex items-center justify-center py-20 relative">
+    <section id="projects" className="min-h-screen flex items-center justify-center py-16 md:py-20 relative">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent"></div>
 
       <RevealOnScroll>
-        <div className="max-w-7xl mx-auto px-4 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
               My Projects
@@ -151,20 +151,20 @@ export const Projects = () => {
                 </div>
 
                 {/* 2x2 Grid for Latest Projects */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
                   {latestProjects.map((p) => (
                     <div
                       key={p.key}
-                      className="relative transform hover:scale-[1.02] transition-all duration-300"
+                      className="relative transform md:hover:scale-[1.02] transition-all duration-300"
                     >
                       {/* Latest Badge */}
                       <div className="absolute -top-3 -right-3 z-10">
-                        <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold py-1 px-3 rounded-full shadow-lg animate-pulse">
+                        <span className="bg-green-500 text-white text-xs font-bold py-1 px-3 rounded-full shadow-lg md:animate-pulse">
                           ✨ NEW
                         </span>
                       </div>
 
-                      <div className="border-2 border-green-500/20 rounded-2xl p-1 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
+                      <div className="border-2 border-green-500/20 rounded-2xl p-1 bg-green-500/10">
                         <ProjectCard
                           title={p.title}
                           description={p.description}
@@ -191,11 +191,11 @@ export const Projects = () => {
                 <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
                 {featuredProjects.map((p) => (
                   <div
                     key={p.key}
-                    className="transform hover:scale-[1.02] transition-all duration-300"
+                    className="transform md:hover:scale-[1.02] transition-all duration-300"
                   >
                     <ProjectCard
                       title={p.title}
@@ -221,11 +221,11 @@ export const Projects = () => {
                 <div className="w-24 h-1 bg-gradient-to-r from-gray-500 to-gray-400 mx-auto rounded-full"></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 mb-16">
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16">
                 {otherProjects.map((p) => (
                   <div
                     key={p.key}
-                    className="transform hover:scale-[1.02] transition-all duration-300"
+                    className="transform md:hover:scale-[1.02] transition-all duration-300"
                   >
                     <ProjectCard
                       title={p.title}

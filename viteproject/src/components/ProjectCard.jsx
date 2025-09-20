@@ -25,7 +25,7 @@ export function ProjectCard({ title, description, tags = [], link, image, alt })
           type="button"
           aria-label={`Preview ${title}`}
           onClick={() => setOpen(true)}
-          className="group/image relative h-48 md:h-56 w-full overflow-hidden rounded-lg mb-6 bg-white/5 border border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          className="group/image relative h-40 sm:h-48 md:h-56 w-full overflow-hidden rounded-lg mb-6 bg-white/5 border border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
           <img
             src={image}
