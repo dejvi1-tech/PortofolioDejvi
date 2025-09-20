@@ -35,8 +35,8 @@ export const Contact = () => {
     {
       icon: "📧",
       title: "Email",
-      value: "dejvi@example.com",
-      href: "mailto:dejvi@example.com"
+      value: "Dejvikacollja@gmail.com",
+      href: "mailto:Dejvikacollja@gmail.com"
     },
     {
       icon: "📱",
