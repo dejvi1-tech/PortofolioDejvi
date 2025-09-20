@@ -1,44 +1,128 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
 import { CVModal } from "../CVModal";
 
 export const Home = () => {
   const [cvOpen, setCvOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-blue-900/20">
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(59, 130, 246, 0.15) 0%, transparent 50%)`
+          }}
+        />
+
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
       <RevealOnScroll>
-        <div className="text-center z-10 px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent leading-tight">
-            Hi, I'm Dejvi Kacollja
+        <div className="text-center z-10 px-4 relative">
+          <div className="mb-4">
+            <span className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-400 text-sm font-medium mb-6 animate-pulse">
+              ✨ Available for freelance work
+            </span>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+            <span className="block bg-gradient-to-r from-white via-blue-100 to-cyan-300 bg-clip-text text-transparent animate-gradient-x">
+              Hi, I'm
+            </span>
+            <span className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent font-black">
+              Dejvi Kacollja
+            </span>
           </h1>
 
-          <p className="text-gray-400 text-lg mb-8 max-w-lg mx-auto">
-            Hey there! I'm a Front‑End Engineer based in Albania, who loves to code and build products with a delightful user experience.
-          </p>
-          <div className="flex justify-center space-x-4">
+          <div className="relative mb-8">
+            <p className="text-gray-300 text-lg md:text-xl mb-2 max-w-2xl mx-auto leading-relaxed">
+              Hey there! I'm a <span className="text-blue-400 font-semibold">Front‑End Engineer</span> based in Albania,
+              who loves to code and build products with a
+              <span className="text-cyan-400 font-semibold"> delightful user experience</span>.
+            </p>
+            <div className="flex justify-center items-center space-x-2 text-gray-400 text-sm">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span>Currently building amazing web experiences</span>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
             <a
               href="#projects"
-              className="bg-blue-500 text-white py-3 px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59, 130, 246, 0.4)]"
+              className="group relative bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-8 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] overflow-hidden"
             >
-              View Projects
+              <span className="relative z-10">View My Work</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
 
             <button
               type="button"
               onClick={() => setCvOpen(true)}
-              className="border border-blue-500/50 text-blue-500 py-3 px-6 rounded font-medium transition-all duration-200
-             hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59, 130, 246, 0.2)] hover:bg-blue-500/10"
+              className="group relative border-2 border-blue-500/50 text-blue-400 py-3 px-8 rounded-xl font-medium transition-all duration-300 hover:border-blue-400 hover:text-blue-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:bg-blue-500/5"
             >
-              CV CHECK
+              <span className="relative z-10 flex items-center gap-2">
+                📄 View Resume
+              </span>
             </button>
+          </div>
+
+          {/* Social links */}
+          <div className="flex justify-center space-x-6 opacity-70 hover:opacity-100 transition-opacity">
+            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors p-2">
+              <span className="sr-only">GitHub</span>
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+              </svg>
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors p-2">
+              <span className="sr-only">LinkedIn</span>
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors p-2">
+              <span className="sr-only">Email</span>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </a>
           </div>
         </div>
       </RevealOnScroll>
 
-      {/* CV modal (loads /cv.pdf if present under viteproject/public) */}
+      {/* CV modal */}
       <CVModal open={cvOpen} onClose={() => setCvOpen(false)} />
     </section>
   );

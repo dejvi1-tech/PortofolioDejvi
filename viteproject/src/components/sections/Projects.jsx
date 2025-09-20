@@ -27,22 +27,70 @@ function getImage(name) {
 }
 
 const projects = [
+  // Latest Projects (Featured)
+  {
+    key: "dejvi-generator",
+    title: "Dejvi Generator",
+    description:
+      "Advanced QR Code generator website with custom styling options and instant download functionality. Features include batch generation, custom colors, logos, and multiple export formats for professional use.",
+    tags: ["React", "JavaScript", "QR Generation", "UI/UX"],
+    link: "https://dejvigenerator.netlify.app/",
+    image: getImage("dejvi-generator"),
+    alt: "Dejvi Generator preview",
+    featured: true,
+    latest: true,
+  },
+  {
+    key: "devi-agency",
+    title: "Devi Agency",
+    description:
+      "Professional digital agency website showcasing comprehensive services, portfolio gallery, and team presentation with modern responsive design and smooth animations.",
+    tags: ["React", "Javascript", "Agency", "Portfolio"],
+    link: "https://deviagency.netlify.app/",
+    image: getImage("devi-agency"),
+    alt: "Devi Agency preview",
+    featured: true,
+    latest: true,
+  },
   {
     key: "e-commerce",
     title: "Mobile Shop E-commerce",
     description:
-      "I created a simple e-commerce shop for selling phones and accessories, with a clean modern design, an admin panel to manage products, checkout and payment features, and a mobile-friendly layout so customers can browse, add to cart, and buy easily.",
-    tags: ["React", "JavaScript", "Vite"],
+      "Full-featured e-commerce platform for mobile devices and accessories with admin panel, inventory management, secure checkout, payment integration, and responsive design for optimal mobile shopping experience.",
+    tags: ["React", "JavaScript", "Vite", "E-commerce"],
     link: "https://dejvimobileshop.netlify.app/",
     image: getImage("e-commerce"),
     alt: "Mobile Shop E-commerce preview",
+    featured: true,
+  },
+  {
+    key: "esimFly",
+    title: "EsimFly",
+    description:
+      "Innovative eSIM platform providing global internet connectivity. Features country selection, data plan comparison, instant eSIM delivery, and seamless activation for travelers worldwide.",
+    tags: ["eSIM", "Travel", "Global Data", "Business"],
+    link: "https://esimfly.al",
+    image: getImage("esimfly"),
+    alt: "EsimFly website preview",
+    featured: true,
+  },
+  // Additional Projects
+  {
+    key: "esimFrontend",
+    title: "eSIM Website Frontend",
+    description:
+      "Modern frontend interface for eSIM services featuring responsive design, intuitive data plan browsing, streamlined purchase flow, and optimized performance for mobile and desktop users.",
+    tags: ["React", "Vite", "TailwindCSS", "Frontend"],
+    link: "https://esimdejvi.netlify.app/",
+    image: getImage("esim-frontend"),
+    alt: "eSIM Website Frontend preview",
   },
   {
     key: "weather",
     title: "Weather App",
     description:
-      "Weather with Dejvi is a simple application that provides information about weather conditions in a specific location. Users can view the current temperature.",
-    tags: ["HTML", "CSS", "JavaScript"],
+      "Clean and intuitive weather application providing real-time weather information, forecasts, and location-based weather data with a user-friendly interface and responsive design.",
+    tags: ["HTML", "CSS", "JavaScript", "API"],
     link: "https://dejvikacollja.netlify.app",
     image: getImage("weather"),
     alt: "Weather App preview",
@@ -51,8 +99,8 @@ const projects = [
     key: "todo",
     title: "To-Do List App",
     description:
-      "Organize your work and life with a simple and fast task manager built with React and Vite.",
-    tags: ["React", "Vite"],
+      "Efficient task management application built with React and Vite, featuring task creation, completion tracking, priority settings, and local storage for productivity enhancement.",
+    tags: ["React", "Vite", "Productivity"],
     link: "https://dejvi-todoapp.netlify.app/",
     image: getImage("todo"),
     alt: "To-Do List App preview",
@@ -60,55 +108,159 @@ const projects = [
   {
     key: "restaurant",
     title: "Restaurant Website",
-    description: "Restaurant website for a restaurant business.",
-    tags: ["HTML", "CSS", "JAVASCRIPT"],
+    description:
+      "Professional restaurant website featuring menu showcase, online reservations, location information, and responsive design optimized for both desktop and mobile dining experiences.",
+    tags: ["HTML", "CSS", "JavaScript", "Restaurant"],
     link: "https://dejvi-restoraunt.netlify.app/",
     image: getImage("restaurant"),
     alt: "Restaurant Website preview",
   },
-  {
-    key: "esimFly",
-    title: "EsimFly",
-    description:
-      "Welcome to eSIMFly.al! eSIMFly.al is a website that gives you internet anywhere in the world. Choose a country and a data plan, buy the eSIM, and use it instantly on your phone.",
-    tags: ["eSIM", "Travel", "Global Data", "Website"],
-    link: "https://esimfly.al",
-    image: getImage("esimfly"),
-    alt: "EsimFly website preview",
-  },
-  {
-    key: "esimFrontend",
-    title: "eSIM Website Frontend",
-    description:
-      "Website phone e‑SIM — responsive frontend for browsing and purchasing data plans, focused on clean UX and performance.",
-    tags: ["React", "Vite", "TailwindCSS"],
-    link: "https://esimdejvi.netlify.app/",
-    image: getImage("esim-frontend"),
-    alt: "eSIM Website Frontend preview",
-  },
 ];
 
 export const Projects = () => {
-  return (
-    <section id="projects" className="min-h-screen flex items-center justify-center py-20">
-      <RevealOnScroll>
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
-            Featured Projects
-          </h2>
+  const latestProjects = projects.filter(p => p.latest);
+  const featuredProjects = projects.filter(p => p.featured && !p.latest);
+  const otherProjects = projects.filter(p => !p.featured);
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {projects.map((p) => (
-              <ProjectCard
-                key={p.key}
-                title={p.title}
-                description={p.description}
-                tags={p.tags}
-                link={p.link}
-                image={p.image}
-                alt={p.alt}
-              />
-            ))}
+  return (
+    <section id="projects" className="min-h-screen flex items-center justify-center py-20 relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent"></div>
+
+      <RevealOnScroll>
+        <div className="max-w-7xl mx-auto px-4 relative">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+              My Projects
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              A showcase of my latest work and professional projects
+            </p>
+          </div>
+
+          {/* Latest Projects Section */}
+          {latestProjects.length > 0 && (
+            <>
+              <div className="mb-12">
+                <div className="flex items-center justify-center mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-green-400">Latest Projects</h3>
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+
+                {/* 2x2 Grid for Latest Projects */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                  {latestProjects.map((p) => (
+                    <div
+                      key={p.key}
+                      className="relative transform hover:scale-[1.02] transition-all duration-300"
+                    >
+                      {/* Latest Badge */}
+                      <div className="absolute -top-3 -right-3 z-10">
+                        <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold py-1 px-3 rounded-full shadow-lg animate-pulse">
+                          ✨ NEW
+                        </span>
+                      </div>
+
+                      <div className="border-2 border-green-500/20 rounded-2xl p-1 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
+                        <ProjectCard
+                          title={p.title}
+                          description={p.description}
+                          tags={p.tags}
+                          link={p.link}
+                          image={p.image}
+                          alt={p.alt}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Featured Projects */}
+          {featuredProjects.length > 0 && (
+            <>
+              <div className="text-center mb-12">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-blue-400">
+                  Featured Work
+                </h3>
+                <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                {featuredProjects.map((p) => (
+                  <div
+                    key={p.key}
+                    className="transform hover:scale-[1.02] transition-all duration-300"
+                  >
+                    <ProjectCard
+                      title={p.title}
+                      description={p.description}
+                      tags={p.tags}
+                      link={p.link}
+                      image={p.image}
+                      alt={p.alt}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Other Projects */}
+          {otherProjects.length > 0 && (
+            <>
+              <div className="text-center mb-12">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gray-300">
+                  Additional Projects
+                </h3>
+                <div className="w-24 h-1 bg-gradient-to-r from-gray-500 to-gray-400 mx-auto rounded-full"></div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 mb-16">
+                {otherProjects.map((p) => (
+                  <div
+                    key={p.key}
+                    className="transform hover:scale-[1.02] transition-all duration-300"
+                  >
+                    <ProjectCard
+                      title={p.title}
+                      description={p.description}
+                      tags={p.tags}
+                      link={p.link}
+                      image={p.image}
+                      alt={p.alt}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* CTA Section */}
+          <div className="text-center mt-16">
+            <div className="glass-strong p-8 rounded-2xl max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold mb-4 text-blue-400">
+                Have a Project in Mind?
+              </h3>
+              <p className="text-gray-300 mb-6">
+                I'm always excited to work on new and challenging projects.
+                Let's create something amazing together!
+              </p>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-8 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
+              >
+                <span>Let's Work Together</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </RevealOnScroll>
