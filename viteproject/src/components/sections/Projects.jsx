@@ -52,6 +52,30 @@ const projects = [
     latest: true,
   },
   {
+    key: "rewe-app-clone",
+    title: "Rewe App Clone",
+    description:
+      "Flutter-based iOS application clone of the Rewe grocery app for the German company. Features modern mobile UI with product browsing, shopping cart functionality, and native iOS performance. Note: Some product photos may not load as this is optimized for iOS, not web deployment.",
+    tags: ["Flutter", "iOS", "Mobile App", "E-commerce"],
+    link: "https://reweappclone.netlify.app/",
+    image: getImage("ReweAppClone"),
+    alt: "Rewe App Clone preview",
+    featured: true,
+    latest: true,
+  },
+  {
+    key: "resume-ai-app",
+    title: "Resume AI Creator",
+    description:
+      "AI-powered resume creator application built with Flutter for frontend development. Features intelligent resume generation, customizable templates, and user-friendly interface for creating professional resumes. Frontend-only implementation with modern UI/UX design.",
+    tags: ["Flutter", "AI", "Resume", "Frontend"],
+    link: "https://github.com/dejvi1-tech/resumeAi-App",
+    image: getImage("resumeapp"),
+    alt: "Resume AI Creator app preview",
+    featured: true,
+    latest: true,
+  },
+  {
     key: "e-commerce",
     title: "Mobile Shop E-commerce",
     description:
