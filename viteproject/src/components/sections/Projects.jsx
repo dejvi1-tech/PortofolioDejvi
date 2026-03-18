@@ -1,5 +1,6 @@
 import { ProjectCard } from "../ProjectCard";
 import placeholder from "../../assets/projects/placeholder.svg";
+import { useLanguage } from "../../context/LanguageContext";
 
 /**
  * Image wiring
@@ -92,7 +93,7 @@ const projects = [
     description:
       "Innovative eSIM platform providing global internet connectivity. Features country selection, data plan comparison, instant eSIM delivery, and seamless activation for travelers worldwide.",
     tags: ["eSIM", "Travel", "Global Data", "Business"],
-    link: "https://esimfly.al",
+    link: "https://esimfly.tel",
     image: getImage("esimfly"),
     alt: "EsimFly website preview",
     featured: true,
@@ -140,130 +141,104 @@ const projects = [
   },
 ];
 
+const SectionLabel = ({ label, color }) => (
+  <div className="flex items-center gap-3 mb-8">
+    <div className={`h-px flex-1 bg-gradient-to-r ${color} opacity-40`}></div>
+    <span className={`text-sm font-semibold tracking-widest uppercase px-3 py-1 rounded-full border ${color.replace("from-", "border-").replace("to-", "").replace(/\s.*/, "/30")} text-gray-300`}>
+      {label}
+    </span>
+    <div className={`h-px flex-1 bg-gradient-to-l ${color} opacity-40`}></div>
+  </div>
+);
+
 export const Projects = () => {
+  const { t } = useLanguage();
   const latestProjects = projects.filter(p => p.latest);
   const featuredProjects = projects.filter(p => p.featured && !p.latest);
   const otherProjects = projects.filter(p => !p.featured);
 
+  const renderGrid = (list, badge) => (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {list.map((p) => (
+        <div key={p.key} className="relative">
+          {badge && (
+            <div className="absolute top-3 right-3 z-10">
+              <span className="bg-green-500 text-white text-xs font-bold py-1 px-2.5 rounded-full shadow-lg">
+                NEW
+              </span>
+            </div>
+          )}
+          <ProjectCard
+            title={p.title}
+            description={p.description}
+            tags={p.tags}
+            link={p.link}
+            image={p.image}
+            alt={p.alt}
+            accentBorder={badge ? "border-green-500/40" : undefined}
+          />
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <section id="projects" className="min-h-screen py-16 md:py-20 relative">
-      {/* Simplified background for mobile */}
-      <div className="absolute inset-0 bg-black"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-950 to-black"></div>
 
       <div className="relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
-              My Projects
+
+          {/* Header */}
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
+              {t("projects_title")}
             </h2>
             <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
-              A showcase of my latest work and professional projects
+              {t("projects_subtitle")}
             </p>
           </div>
 
-          {/* Latest Projects Section - Mobile First */}
+          {/* Latest */}
           {latestProjects.length > 0 && (
-            <div className="mb-12">
-              <div className="text-center mb-8">
-                <h3 className="text-xl md:text-2xl font-bold text-green-400 mb-4">Latest Projects</h3>
-              </div>
-
-              {/* Simple Grid for Mobile */}
-              <div className="space-y-6 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8 md:space-y-0 mb-12">
-                {latestProjects.map((p) => (
-                  <div key={p.key} className="relative">
-                    {/* Simple NEW badge for mobile */}
-                    <div className="absolute top-2 right-2 z-10">
-                      <span className="bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
-                        NEW
-                      </span>
-                    </div>
-
-                    <div className="bg-gray-900 border border-green-500/30 rounded-lg p-4">
-                      <ProjectCard
-                        title={p.title}
-                        description={p.description}
-                        tags={p.tags}
-                        link={p.link}
-                        image={p.image}
-                        alt={p.alt}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="mb-14">
+              <SectionLabel label={t("projects_latest")} color="from-green-500 to-emerald-400" />
+              {renderGrid(latestProjects, true)}
             </div>
           )}
 
-          {/* Featured Projects */}
+          {/* Featured */}
           {featuredProjects.length > 0 && (
-            <div className="mb-12">
-              <div className="text-center mb-8">
-                <h3 className="text-xl md:text-2xl font-bold text-blue-400 mb-4">
-                  Featured Work
-                </h3>
-              </div>
-
-              <div className="space-y-6 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8 md:space-y-0 mb-12">
-                {featuredProjects.map((p) => (
-                  <div key={p.key} className="bg-gray-900 border border-blue-500/30 rounded-lg p-4">
-                    <ProjectCard
-                      title={p.title}
-                      description={p.description}
-                      tags={p.tags}
-                      link={p.link}
-                      image={p.image}
-                      alt={p.alt}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div className="mb-14">
+              <SectionLabel label={t("projects_featured")} color="from-blue-500 to-cyan-400" />
+              {renderGrid(featuredProjects, false)}
             </div>
           )}
 
-          {/* Other Projects */}
+          {/* Additional */}
           {otherProjects.length > 0 && (
-            <div className="mb-12">
-              <div className="text-center mb-8">
-                <h3 className="text-xl md:text-2xl font-bold text-gray-300 mb-4">
-                  Additional Projects
-                </h3>
-              </div>
-
-              <div className="space-y-6 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8 md:space-y-0 mb-12">
-                {otherProjects.map((p) => (
-                  <div key={p.key} className="bg-gray-900 border border-gray-500/30 rounded-lg p-4">
-                    <ProjectCard
-                      title={p.title}
-                      description={p.description}
-                      tags={p.tags}
-                      link={p.link}
-                      image={p.image}
-                      alt={p.alt}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div className="mb-14">
+              <SectionLabel label={t("projects_additional")} color="from-gray-500 to-gray-400" />
+              {renderGrid(otherProjects, false)}
             </div>
           )}
 
-          {/* Simple CTA Section */}
+          {/* CTA */}
           <div className="text-center">
-            <div className="bg-gray-900 border border-blue-500/30 p-6 rounded-lg max-w-2xl mx-auto">
-              <h3 className="text-xl font-bold mb-4 text-blue-400">
-                Have a Project in Mind?
+            <div className="glass-strong p-8 rounded-2xl max-w-2xl mx-auto hover:-translate-y-1 transition-all duration-300">
+              <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                {t("projects_cta_title")}
               </h3>
-              <p className="text-gray-300 mb-6">
-                Let's create something amazing together!
-              </p>
+              <p className="text-gray-400 mb-6">{t("projects_cta_text")}</p>
               <a
                 href="#contact"
-                className="inline-block bg-blue-600 text-white py-3 px-6 rounded font-medium"
+                className="inline-block bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-8 rounded-xl font-medium hover:scale-105 hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] transition-all duration-300"
               >
-                Let's Work Together
+                {t("projects_cta_button")}
               </a>
             </div>
           </div>
+
         </div>
       </div>
     </section>

@@ -1,13 +1,20 @@
 import { useActiveSection } from "../hooks/useActiveSection";
+import { useLanguage } from "../context/LanguageContext";
 
 export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
   const active = useActiveSection();
+  const { lang, toggleLang, t } = useLanguage();
+
+  const linkClass = (section) =>
+    `text-2xl font-semibold my-4 transform transition-all duration-300
+    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
+    ${active === section ? "text-white" : "text-gray-300"}`;
+
   return (
     <div
       id="mobile-menu"
       className={`fixed top-0 left-0 w-full bg-[rgba(10,10,10,0.8)] backdrop-blur-lg z-40 flex flex-col items-center justify-center
                      transition-all duration-300 ease-in-out
-
                      ${
                        menuOpen
                          ? "h-screen opacity-100 pointer-events-auto"
@@ -23,52 +30,27 @@ export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
         &times;
       </button>
 
-      <a
-        href="#home"
-        onClick={() => setMenuOpen(false)}
-        aria-current={active === "home" ? "page" : undefined}
-        className={`text-2xl font-semibold my-4 transform transition-all duration-300
-                    ${
-                      menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-                    }
-                    ${active === "home" ? "text-white" : "text-gray-300"}
-            `}
-      >
-        Home
+      <a href="#home" onClick={() => setMenuOpen(false)} aria-current={active === "home" ? "page" : undefined} className={linkClass("home")}>
+        {t("nav_home")}
       </a>
-      <a
-        href="#about"
-        onClick={() => setMenuOpen(false)}
-        aria-current={active === "about" ? "page" : undefined}
-        className={`text-2xl font-semibold my-4 transform transition-all duration-300
-            ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            ${active === "about" ? "text-white" : "text-gray-300"}
-    `}
-      >
-        About
+      <a href="#about" onClick={() => setMenuOpen(false)} aria-current={active === "about" ? "page" : undefined} className={linkClass("about")}>
+        {t("nav_about")}
       </a>
-      <a
-        href="#projects"
-        onClick={() => setMenuOpen(false)}
-        aria-current={active === "projects" ? "page" : undefined}
-        className={`text-2xl font-semibold my-4 transform transition-all duration-300
-            ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            ${active === "projects" ? "text-white" : "text-gray-300"}
-    `}
-      >
-        Projects
+      <a href="#projects" onClick={() => setMenuOpen(false)} aria-current={active === "projects" ? "page" : undefined} className={linkClass("projects")}>
+        {t("nav_projects")}
       </a>
-      <a
-        href="#contact"
-        onClick={() => setMenuOpen(false)}
-        aria-current={active === "contact" ? "page" : undefined}
-        className={`text-2xl font-semibold my-4 transform transition-all duration-300
-            ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-            ${active === "contact" ? "text-white" : "text-gray-300"}
-    `}
-      >
-        Contact
+      <a href="#contact" onClick={() => setMenuOpen(false)} aria-current={active === "contact" ? "page" : undefined} className={linkClass("contact")}>
+        {t("nav_contact")}
       </a>
+
+      <button
+        onClick={toggleLang}
+        className={`mt-6 px-4 py-2 text-sm font-semibold rounded-lg border border-white/20 text-gray-300 hover:text-white hover:border-blue-500/50 transition-all duration-200
+          ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+        aria-label={`Switch to ${lang === "en" ? "German" : "English"}`}
+      >
+        {lang === "en" ? "Deutsch" : "English"}
+      </button>
     </div>
   );
 };

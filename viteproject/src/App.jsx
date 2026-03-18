@@ -8,13 +8,16 @@ import { About } from "./components/sections/About";
 import { Projects } from "./components/sections/Projects";
 import "./index.css";
 import { Contact } from "./components/sections/Contact";
+import { Footer } from "./components/Footer";
+import { ScrollToTop } from "./components/ScrollToTop";
+import { LanguageProvider } from "./context/LanguageContext";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <>
+    <LanguageProvider>
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}{" "}
       <div
         className={`min-h-screen transition-opacity duration-700 ${
@@ -27,8 +30,10 @@ function App() {
         <About />
         <Projects />
         <Contact />
+        <Footer />
+        <ScrollToTop />
       </div>
-    </>
+    </LanguageProvider>
   );
 }
 

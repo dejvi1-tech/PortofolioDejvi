@@ -8,171 +8,160 @@ body {
   background: #0a0a0a;
   color: #f3f4f6;
   scroll-behavior: smooth;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
-/* Smooth scrolling for all browsers */
 * {
   scroll-behavior: smooth;
 }
 
-/* Improved mobile touch interactions */
-@media (max-width: 768px) {
-  /* Reduce motion for mobile users with preference */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+}
 
-  /* Better mobile spacing */
+/* Mobile */
+@media (max-width: 768px) {
   section {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
-  /* Improve touch targets */
-  button,
-  a {
+  button, a {
     min-height: 44px;
     min-width: 44px;
   }
-
-  /* Mobile performance optimizations */
-  .glass,
-  .glass-strong {
+  .glass, .glass-strong {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
   }
-
-  /* Reduce complex animations on mobile */
-  .animate-pulse {
-    animation-duration: 2s;
-  }
-
-  /* Optimize project cards for mobile */
-  .group:hover .group-hover\:scale-110 {
-    transform: scale(1.05);
-  }
-
-  /* Improve mobile project grid */
   #projects .grid {
     gap: 1rem;
-  }
-
-  /* Mobile-specific project card optimizations */
-  .project-card-mobile {
-    transform: none !important;
   }
 }
 
 @layer utilities {
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  }
 
+  /* ── Animations ── */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
   .animate-blink {
     animation: blink 0.8s step-end infinite;
   }
 
-  @keyframes loading {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(250%);
-    }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
-
-  .animate-loading-bar {
-    animation: loading 0.8s ease infinite;
+  .animate-spin-slow {
+    animation: spin-slow 6s linear infinite;
   }
 
   @keyframes gradient-x {
-    0%, 100% {
-      background-size: 200% 200%;
-      background-position: left center;
-    }
-    50% {
-      background-size: 200% 200%;
-      background-position: right center;
-    }
+    0%, 100% { background-size: 200% 200%; background-position: left center; }
+    50% { background-size: 200% 200%; background-position: right center; }
   }
-
   .animate-gradient-x {
     animation: gradient-x 3s ease infinite;
   }
 
   @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
-
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
 
   @keyframes glow {
-    0%, 100% {
-      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
-    }
-    50% {
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
-    }
+    0%, 100% { box-shadow: 0 0 5px rgba(59,130,246,0.5); }
+    50% { box-shadow: 0 0 20px rgba(59,130,246,0.8), 0 0 30px rgba(59,130,246,0.6); }
   }
-
   .animate-glow {
     animation: glow 2s ease-in-out infinite;
   }
 
-  /* Enhanced glass card utility */
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-up {
+    animation: slide-up 0.5s ease forwards;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.4s ease forwards;
+  }
+
+  /* zoom-in-95 for modals */
+  @keyframes zoom-in-95 {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .animate-in.zoom-in-95 {
+    animation: zoom-in-95 0.2s ease forwards;
+  }
+  .animate-in.fade-in {
+    animation: fade-in 0.2s ease forwards;
+  }
+
+  /* ── Glass cards ── */
   .glass {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 1rem;
   }
-
   .glass-strong {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-radius: 1rem;
   }
 }
 
+/* ── Reveal on scroll ── */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
 }
-
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
-/* Offset anchor scrolling to account for fixed navbar */
+
+/* Staggered children */
+.reveal.visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal.visible > *:nth-child(2) { transition-delay: 80ms; }
+.reveal.visible > *:nth-child(3) { transition-delay: 160ms; }
+.reveal.visible > *:nth-child(4) { transition-delay: 240ms; }
+.reveal.visible > *:nth-child(5) { transition-delay: 320ms; }
+
+/* Anchor offset for fixed navbar */
 section[id] {
   scroll-margin-top: 80px;
+}
+
+/* line-clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

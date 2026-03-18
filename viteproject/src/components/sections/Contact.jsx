@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
 import emailjs from "emailjs-com";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const Contact = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,10 +24,10 @@ export const Contact = () => {
 
     try {
       await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, PUBLIC_KEY);
-      setStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon.' });
+      setStatus({ type: 'success', message: t("contact_success") });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      setStatus({ type: 'error', message: 'Oops! Something went wrong. Please try again.' });
+      setStatus({ type: 'error', message: t("contact_error") });
     } finally {
       setIsLoading(false);
     }
@@ -34,20 +36,20 @@ export const Contact = () => {
   const contactMethods = [
     {
       icon: "📧",
-      title: "Email",
+      title: t("contact_email"),
       value: "Dejvikacollja@gmail.com",
       href: "mailto:Dejvikacollja@gmail.com"
     },
     {
-      icon: "📱",
-      title: "Phone",
-      value: "+355 XX XXX XXX",
-      href: "tel:+355XXXXXXX"
+      icon: "📍",
+      title: t("contact_location"),
+      value: t("contact_location_value"),
+      href: "#"
     },
     {
-      icon: "📍",
-      title: "Location",
-      value: "Albania",
+      icon: "🕐",
+      title: t("contact_timezone"),
+      value: "CET / CEST (UTC+1/+2)",
       href: "#"
     }
   ];
@@ -64,10 +66,10 @@ export const Contact = () => {
         <div className="max-w-6xl mx-auto px-4 relative">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
-              Let's Work Together
+              {t("contact_title")}
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Have a project in mind? I'd love to hear from you. Let's create something amazing together.
+              {t("contact_subtitle")}
             </p>
           </div>
 
@@ -75,10 +77,9 @@ export const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-8">
               <div className="glass-strong p-8 rounded-2xl">
-                <h3 className="text-2xl font-bold mb-6 text-blue-400">Get in Touch</h3>
+                <h3 className="text-2xl font-bold mb-6 text-blue-400">{t("contact_get_in_touch")}</h3>
                 <p className="text-gray-300 mb-8 leading-relaxed">
-                  I'm always open to discussing new opportunities, interesting projects,
-                  or just having a chat about technology and development.
+                  {t("contact_intro")}
                 </p>
 
                 <div className="space-y-6">
@@ -101,12 +102,11 @@ export const Contact = () => {
 
                 {/* Social Links */}
                 <div className="mt-8 pt-8 border-t border-white/10">
-                  <h4 className="text-lg font-semibold mb-4 text-white">Follow Me</h4>
+                  <h4 className="text-lg font-semibold mb-4 text-white">{t("contact_follow")}</h4>
                   <div className="flex gap-4">
                     {[
-                      { icon: "💼", label: "LinkedIn", href: "#" },
-                      { icon: "🐙", label: "GitHub", href: "#" },
-                      { icon: "🐦", label: "Twitter", href: "#" },
+                      { icon: "💼", label: "LinkedIn", href: "https://www.linkedin.com/in/dejvi-kacollja/" },
+                      { icon: "🐙", label: "GitHub", href: "https://github.com/dejvi1-tech" },
                     ].map((social, index) => (
                       <a
                         key={index}
@@ -124,14 +124,14 @@ export const Contact = () => {
 
             {/* Contact Form */}
             <div className="glass-strong p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-6 text-purple-400">Send a Message</h3>
+              <h3 className="text-2xl font-bold mb-6 text-purple-400">{t("contact_send")}</h3>
 
               {status && (
                 <div className={`mb-6 p-4 rounded-xl ${
                   status.type === 'success'
                     ? 'bg-green-500/10 border border-green-500/20 text-green-400'
                     : 'bg-red-500/10 border border-red-500/20 text-red-400'
-                }`}>
+                }`} role="alert">
                   {status.message}
                 </div>
               )}
@@ -139,7 +139,7 @@ export const Contact = () => {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="relative group">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">
-                    Full Name
+                    {t("contact_name")}
                   </label>
                   <input
                     type="text"
@@ -148,7 +148,7 @@ export const Contact = () => {
                     required
                     value={formData.name}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white transition-all focus:outline-none focus:border-blue-500 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/20 group-hover:border-white/20"
-                    placeholder="Your full name"
+                    placeholder={t("contact_name_placeholder")}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
@@ -157,7 +157,7 @@ export const Contact = () => {
 
                 <div className="relative group">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">
-                    Email Address
+                    {t("contact_email_label")}
                   </label>
                   <input
                     type="email"
@@ -166,7 +166,7 @@ export const Contact = () => {
                     required
                     value={formData.email}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white transition-all focus:outline-none focus:border-blue-500 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/20 group-hover:border-white/20"
-                    placeholder="your.email@example.com"
+                    placeholder={t("contact_email_placeholder")}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
@@ -175,7 +175,7 @@ export const Contact = () => {
 
                 <div className="relative group">
                   <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">
-                    Message
+                    {t("contact_message")}
                   </label>
                   <textarea
                     id="message"
@@ -184,7 +184,7 @@ export const Contact = () => {
                     rows={6}
                     value={formData.message}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white transition-all focus:outline-none focus:border-blue-500 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/20 group-hover:border-white/20 resize-none"
-                    placeholder="Tell me about your project or just say hello..."
+                    placeholder={t("contact_message_placeholder")}
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
@@ -203,12 +203,12 @@ export const Contact = () => {
                   {isLoading ? (
                     <span className="flex items-center justify-center gap-3">
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      Sending...
+                      {t("contact_sending")}
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-2">
-                      Send Message
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {t("contact_submit")}
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                       </svg>
                     </span>
