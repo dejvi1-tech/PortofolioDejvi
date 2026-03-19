@@ -1,6 +1,6 @@
 # Netlify config for this repo
 [build]
-  command = "npm run build"
+  command = "npm ci && npm run build"
   publish = "viteproject/dist"
 
 [build.environment]
