@@ -216,7 +216,7 @@ const translations = {
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("de");
 
   const t = (key) => translations[lang]?.[key] ?? key;
 
