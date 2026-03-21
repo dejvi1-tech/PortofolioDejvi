@@ -29,6 +29,18 @@ function getImage(name) {
 const projects = [
   // Latest Projects (Featured)
   {
+    key: "flowpilot-saas",
+    title: "FlowPilot",
+    description:
+      "FlowPilot is an all-in-one dashboard for managing a SaaS business. Designed for small-to-medium companies that need to track their customers, revenue, and operations in one place. Features subscription management, invoicing, ticketing, team coordination, and real-time analytics.",
+    tags: ["React", "TypeScript", "SaaS", "Dashboard", "TailwindCSS"],
+    link: "https://flowpilotsaas.netlify.app/",
+    image: getImage("flowpilot"),
+    alt: "FlowPilot SaaS Dashboard preview",
+    featured: true,
+    latest: true,
+  },
+  {
     key: "dejvi-generator",
     title: "Dejvi Generator",
     description:
