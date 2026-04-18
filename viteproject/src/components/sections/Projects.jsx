@@ -29,6 +29,18 @@ function getImage(name) {
 const projects = [
   // Latest Projects (Featured)
   {
+    key: "stepsapp",
+    title: "StepsApp – Pedometer & Fit",
+    description:
+      "StepsApp is an iOS app built with Swift that tracks your daily steps, calories, distance, and active minutes using the iPhone's built-in pedometer. Features daily/weekly/monthly views, streaks, a friends leaderboard, and Apple Watch support. Published on the App Store.",
+    tags: ["Swift", "iOS", "HealthKit", "SwiftUI", "App Store"],
+    link: "https://apps.apple.com/id/app/steps-pedometer-fit/id6760142770",
+    image: getImage("stepsapp"),
+    alt: "StepsApp – Pedometer & Fit preview",
+    featured: true,
+    latest: true,
+  },
+  {
     key: "flowpilot-saas",
     title: "FlowPilot",
     description:
