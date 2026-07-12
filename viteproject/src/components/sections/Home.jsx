@@ -2,7 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../context/LanguageContext";
 
-const CV_URL = `${import.meta.env.BASE_URL}cv.pdf`;
+const cvUrl = (lang) => `${import.meta.env.BASE_URL}cv-${lang}.pdf`;
+const cvName = (lang) => (lang === "de" ? "Dejvi-Kacollja-Lebenslauf.pdf" : "Dejvi-Kacollja-CV.pdf");
 const PROFILE = `${import.meta.env.BASE_URL}profile.jpg`;
 // Standalone apps page: real subdomain in production, local file in dev
 const APPS_URL = import.meta.env.PROD
@@ -81,7 +82,7 @@ const ProfileCard = ({ t }) => {
 };
 
 export const Home = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16">
@@ -187,8 +188,8 @@ export const Home = () => {
                 {t("home_cta_contact")}
               </a>
               <a
-                href={CV_URL}
-                download="Dejvi-Kacollja-CV.pdf"
+                href={cvUrl(lang)}
+                download={cvName(lang)}
                 className="inline-flex items-center gap-2 t-soft hover:t-strong py-3 px-3 font-semibold transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

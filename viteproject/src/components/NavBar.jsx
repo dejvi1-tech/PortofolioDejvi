@@ -4,7 +4,8 @@ import { useLanguage } from "../context/LanguageContext";
 import { ThemeToggle, LangToggle } from "./NavToggles";
 
 const SECTIONS = ["about", "experience", "education", "projects", "skills", "contact"];
-const CV_URL = `${import.meta.env.BASE_URL}cv.pdf`;
+const cvUrl = (lang) => `${import.meta.env.BASE_URL}cv-${lang}.pdf`;
+const cvName = (lang) => (lang === "de" ? "Dejvi-Kacollja-Lebenslauf.pdf" : "Dejvi-Kacollja-CV.pdf");
 
 export const Navbar = ({ menuOpen, setMenuOpen }) => {
   const active = useActiveSection();
@@ -95,8 +96,8 @@ export const Navbar = ({ menuOpen, setMenuOpen }) => {
             </div>
 
             <a
-              href={CV_URL}
-              download="Dejvi-Kacollja-CV.pdf"
+              href={cvUrl(lang)}
+              download={cvName(lang)}
               className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl s-1 hover:s-2 border bd hover:border-accent t-strong transition-all duration-200"
             >
               {t("nav_cv")}

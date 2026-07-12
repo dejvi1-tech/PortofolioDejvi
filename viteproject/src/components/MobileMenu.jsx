@@ -3,11 +3,12 @@ import { useLanguage } from "../context/LanguageContext";
 import { ThemeToggle, LangToggle } from "./NavToggles";
 
 const SECTIONS = ["home", "about", "experience", "education", "projects", "skills", "languages", "contact"];
-const CV_URL = `${import.meta.env.BASE_URL}cv.pdf`;
+const cvUrl = (lang) => `${import.meta.env.BASE_URL}cv-${lang}.pdf`;
+const cvName = (lang) => (lang === "de" ? "Dejvi-Kacollja-Lebenslauf.pdf" : "Dejvi-Kacollja-CV.pdf");
 
 export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
   const active = useActiveSection();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const linkClass = (section) =>
     `group relative text-2xl font-semibold my-3 transition-all duration-300
@@ -49,8 +50,8 @@ export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
       ))}
 
       <a
-        href={CV_URL}
-        download="Dejvi-Kacollja-CV.pdf"
+        href={cvUrl(lang)}
+        download={cvName(lang)}
         onClick={() => setMenuOpen(false)}
         className={`mt-6 inline-flex items-center px-6 py-3 rounded-xl s-1 hover:s-2 border bd t-strong font-semibold transition-colors
           ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
