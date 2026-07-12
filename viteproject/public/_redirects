@@ -1,0 +1,3 @@
+# apps.dejvikacollja.com serves the standalone apps page.
+# Only the root path is rewritten — /assets/* and other files load normally.
+https://apps.dejvikacollja.com/ /apps.html 200!

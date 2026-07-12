@@ -1,268 +1,136 @@
+import { CaseStudyCard } from "../CaseStudyCard";
 import { ProjectCard } from "../ProjectCard";
-import placeholder from "../../assets/projects/placeholder.svg";
+import { SectionHeading } from "../SectionHeading";
+import { RevealOnScroll } from "../RevealOnScroll";
 import { useLanguage } from "../../context/LanguageContext";
 
 /**
  * Image wiring
  * - Drop PNG/JPG/SVG thumbnails into: src/assets/projects/
- * - Name them to match keys below (e.g., weather.jpg, todo.png, restaurant.jpg, esimfly.jpg, esim-frontend.png)
- * - The mapping below will auto-pick them; unknown names fallback to the placeholder.
+ * - Name them to match the getImage("name") calls below.
+ * - Unknown names fall back to `null` (cards show a neutral placeholder).
  */
-const rawImages = import.meta.glob("../../assets/projects/*.{png,jpg,jpeg,svg}", { eager: true });
+const rawImages = import.meta.glob("../../assets/projects/*.{png,jpg,jpeg,svg,webp}", { eager: true });
 const imagesMap = Object.fromEntries(
   Object.entries(rawImages).map(([p, m]) => [p, m.default || m])
 );
 function getImage(name) {
   const dash = name.replace(/\s+/g, "-").toLowerCase();
   const candidates = [
-    `${name}.png`, `${name}.jpg`, `${name}.jpeg`, `${name}.svg`,
-    `${name.toLowerCase()}.png`, `${name.toLowerCase()}.jpg`, `${name.toLowerCase()}.jpeg`, `${name.toLowerCase()}.svg`,
-    `${dash}.png`, `${dash}.jpg`, `${dash}.jpeg`, `${dash}.svg`,
+    `${name}.webp`, `${name}.png`, `${name}.jpg`, `${name}.jpeg`, `${name}.svg`,
+    `${name.toLowerCase()}.webp`, `${name.toLowerCase()}.png`, `${name.toLowerCase()}.jpg`, `${name.toLowerCase()}.jpeg`, `${name.toLowerCase()}.svg`,
+    `${dash}.webp`, `${dash}.png`, `${dash}.jpg`, `${dash}.jpeg`, `${dash}.svg`,
   ];
   for (const [path, url] of Object.entries(imagesMap)) {
     const base = path.split("/").pop().toLowerCase();
     if (candidates.includes(base)) return url;
   }
-  return placeholder;
+  return null;
 }
 
-const projects = [
-  // Latest Projects (Featured)
+/* ── Featured projects ── */
+const featured = [
   {
-    key: "stepsapp",
-    title: "StepsApp – Pedometer & Fit",
-    description:
-      "StepsApp is an iOS app built with Swift that tracks your daily steps, calories, distance, and active minutes using the iPhone's built-in pedometer. Features daily/weekly/monthly views, streaks, a friends leaderboard, and Apple Watch support. Published on the App Store.",
-    tags: ["Swift", "iOS", "HealthKit", "SwiftUI", "App Store"],
-    link: "https://apps.apple.com/id/app/steps-pedometer-fit/id6760142770",
-    image: getImage("stepsapp"),
-    alt: "StepsApp – Pedometer & Fit preview",
-    featured: true,
-    latest: true,
-  },
-  {
-    key: "flowpilot-saas",
-    title: "FlowPilot",
-    description:
-      "FlowPilot is an all-in-one dashboard for managing a SaaS business. Designed for small-to-medium companies that need to track their customers, revenue, and operations in one place. Features subscription management, invoicing, ticketing, team coordination, and real-time analytics.",
-    tags: ["React", "TypeScript", "SaaS", "Dashboard", "TailwindCSS"],
-    link: "https://flowpilotsaas.netlify.app/",
-    image: getImage("flowpilot"),
-    alt: "FlowPilot SaaS Dashboard preview",
-    featured: true,
-    latest: true,
-  },
-  {
-    key: "esimFly",
+    key: "esimfly",
+    category: "Live product",
     title: "EsimFly.tel",
-    description:
-      "EsimFly ist ein von mir entwickeltes, vollständig funktionales eSIM-Unternehmen für Internetnutzer. Die Plattform bietet eSIM-Datenpakete für Reisende und mobile Nutzer weltweit – mit sofortiger Aktivierung, einfacher Verwaltung und Unterstützung für alle kompatiblen Geräte.",
-    tags: ["eSIM", "Business", "Global Data", "Travel"],
-    link: "https://esimfly.tel",
+    tagline: "International eSIM platform",
     image: getImage("esimfly"),
-    alt: "EsimFly website preview",
-    featured: true,
-    latest: true,
+    alt: "EsimFly.tel eSIM platform homepage",
+    description:
+      "A complete eSIM store where travellers buy a data plan and receive their eSIM instantly. I designed and built the React front end and the full ordering flow.",
+    highlights: [
+      "Instant eSIM delivery by email & QR code",
+      "Stripe checkout with automated fulfilment",
+      "React front end · Node & Supabase back end",
+    ],
+    metric: "4,000+ customers worldwide",
+    tags: ["React", "TypeScript", "Node.js", "Supabase", "Stripe"],
+    live: "https://esimfly.tel",
   },
   {
-    key: "devi-agency",
-    title: "Devi Agency",
+    key: "flowpilot",
+    category: "SaaS dashboard",
+    title: "FlowPilot",
+    tagline: "All-in-one dashboard for small businesses",
+    image: getImage("flowpilot"),
+    alt: "FlowPilot SaaS dashboard preview",
     description:
-      "Professional digital agency website showcasing comprehensive services, portfolio gallery, and team presentation with modern responsive design and smooth animations.",
-    tags: ["React", "Javascript", "Agency", "Portfolio"],
-    link: "https://deviagency.netlify.app/",
-    image: getImage("devi-agency"),
-    alt: "Devi Agency preview",
-    featured: true,
-    latest: true,
-  },
-  {
-    key: "rewe-app-clone",
-    title: "Rewe App Clone",
-    description:
-      "Flutter-based iOS application clone of the Rewe grocery app for the German company. Features modern mobile UI with product browsing, shopping cart functionality, and native iOS performance. Note: Some product photos may not load as this is optimized for iOS, not web deployment.",
-    tags: ["Flutter", "iOS", "Mobile App", "E-commerce"],
-    link: "https://reweappclone.netlify.app/",
-    image: getImage("ReweAppClone"),
-    alt: "Rewe App Clone preview",
-    featured: true,
-    latest: true,
-  },
-  {
-    key: "resume-ai-app",
-    title: "Resume AI Creator",
-    description:
-      "AI-powered resume creator application built with Flutter for frontend development. Features intelligent resume generation, customizable templates, and user-friendly interface for creating professional resumes. Frontend-only implementation with modern UI/UX design.",
-    tags: ["Flutter", "AI", "Resume", "Frontend"],
-    link: "https://github.com/dejvi1-tech/resumeAi-App",
-    image: getImage("resumeapp"),
-    alt: "Resume AI Creator app preview",
-    featured: true,
-    latest: true,
-  },
-  {
-    key: "e-commerce",
-    title: "Mobile Shop E-commerce",
-    description:
-      "Full-featured e-commerce platform for mobile devices and accessories with admin panel, inventory management, secure checkout, payment integration, and responsive design for optimal mobile shopping experience.",
-    tags: ["React", "JavaScript", "Vite", "E-commerce"],
-    link: "https://dejvimobileshop.netlify.app/",
-    image: getImage("e-commerce"),
-    alt: "Mobile Shop E-commerce preview",
-    featured: true,
-  },
-  {
-    key: "dejvi-generator",
-    title: "Dejvi Generator",
-    description:
-      "Advanced QR Code generator website with custom styling options and instant download functionality. Features include batch generation, custom colors, logos, and multiple export formats for professional use.",
-    tags: ["React", "JavaScript", "QR Generation", "UI/UX"],
-    link: "https://dejvigenerator.netlify.app/",
-    image: getImage("dejvi-generator"),
-    alt: "Dejvi Generator preview",
-    featured: true,
-  },
-  // Additional Projects
-  {
-    key: "esimFrontend",
-    title: "eSIM Website Frontend",
-    description:
-      "Modern frontend interface for eSIM services featuring responsive design, intuitive data plan browsing, streamlined purchase flow, and optimized performance for mobile and desktop users.",
-    tags: ["React", "Vite", "TailwindCSS", "Frontend"],
-    link: "https://esimdejvi.netlify.app/",
-    image: getImage("esim-frontend"),
-    alt: "eSIM Website Frontend preview",
-  },
-  {
-    key: "weather",
-    title: "Weather App",
-    description:
-      "Clean and intuitive weather application providing real-time weather information, forecasts, and location-based weather data with a user-friendly interface and responsive design.",
-    tags: ["HTML", "CSS", "JavaScript", "API"],
-    link: "https://dejvikacollja.netlify.app",
-    image: getImage("weather"),
-    alt: "Weather App preview",
-  },
-  {
-    key: "todo",
-    title: "To-Do List App",
-    description:
-      "Efficient task management application built with React and Vite, featuring task creation, completion tracking, priority settings, and local storage for productivity enhancement.",
-    tags: ["React", "Vite", "Productivity"],
-    link: "https://dejvi-todoapp.netlify.app/",
-    image: getImage("todo"),
-    alt: "To-Do List App preview",
-  },
-  {
-    key: "restaurant",
-    title: "Restaurant Website",
-    description:
-      "Professional restaurant website featuring menu showcase, online reservations, location information, and responsive design optimized for both desktop and mobile dining experiences.",
-    tags: ["HTML", "CSS", "JavaScript", "Restaurant"],
-    link: "https://dejvi-restoraunt.netlify.app/",
-    image: getImage("restaurant"),
-    alt: "Restaurant Website preview",
+      "A clean, data-dense dashboard that brings subscriptions, invoicing, ticketing and analytics together in one place.",
+    highlights: [
+      "Subscriptions, invoices & tickets in one UI",
+      "Reusable, component-driven architecture",
+      "Fast, responsive and fully accessible",
+    ],
+    metric: "Live demo",
+    tags: ["React", "TypeScript", "Tailwind CSS"],
+    live: "https://flowpilotsaas.netlify.app/",
   },
 ];
 
-const SectionLabel = ({ label, color }) => (
-  <div className="flex items-center gap-3 mb-8">
-    <div className={`h-px flex-1 bg-gradient-to-r ${color} opacity-40`}></div>
-    <span className={`text-sm font-semibold tracking-widest uppercase px-3 py-1 rounded-full border ${color.replace("from-", "border-").replace("to-", "").replace(/\s.*/, "/30")} text-gray-300`}>
-      {label}
-    </span>
-    <div className={`h-px flex-1 bg-gradient-to-l ${color} opacity-40`}></div>
-  </div>
-);
+/* ── Additional projects ── */
+const more = [
+  { key: "devi-agency", title: "Devi Agency", description: "Digital agency site with services, portfolio gallery, and team presentation.", tags: ["React", "JavaScript"], image: getImage("devi-agency"), alt: "Devi Agency preview", live: "https://deviagency.netlify.app/" },
+  { key: "e-commerce", title: "Mobile Shop E-commerce", description: "E-commerce platform with admin panel, inventory management, and secure checkout.", tags: ["React", "Vite"], image: getImage("e-commerce"), alt: "Mobile Shop preview", live: "https://dejvimobileshop.netlify.app/" },
+  { key: "rewe-app-clone", title: "Rewe App Clone", description: "Flutter iOS clone of the Rewe grocery app — product browsing and shopping cart.", tags: ["Flutter", "iOS"], image: getImage("ReweAppClone"), alt: "Rewe App Clone preview", live: "https://reweappclone.netlify.app/" },
+  { key: "todo", title: "To-Do List App", description: "Task manager with completion tracking, priorities, and local storage.", tags: ["React", "Vite"], image: getImage("todo"), alt: "To-Do App preview", live: "https://dejvi-todoapp.netlify.app/" },
+];
 
 export const Projects = () => {
   const { t } = useLanguage();
-  const latestProjects = projects.filter(p => p.latest);
-  const featuredProjects = projects.filter(p => p.featured && !p.latest);
-  const otherProjects = projects.filter(p => !p.featured);
-
-  const renderGrid = (list, badge) => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {list.map((p) => (
-        <div key={p.key} className="relative">
-          {badge && (
-            <div className="absolute top-3 right-3 z-10">
-              <span className="bg-green-500 text-white text-xs font-bold py-1 px-2.5 rounded-full shadow-lg">
-                NEW
-              </span>
-            </div>
-          )}
-          <ProjectCard
-            title={p.title}
-            description={p.description}
-            tags={p.tags}
-            link={p.link}
-            image={p.image}
-            alt={p.alt}
-            accentBorder={badge ? "border-green-500/40" : undefined}
-          />
-        </div>
-      ))}
-    </div>
-  );
 
   return (
-    <section id="projects" className="min-h-screen py-16 md:py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-950 to-black"></div>
+    <section id="projects" className="relative py-20 md:py-28">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <SectionHeading
+          eyebrow="Work"
+          title={t("projects_title")}
+          subtitle={t("projects_subtitle")}
+          align="left"
+        />
 
-      <div className="relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Featured projects */}
+        <div className="space-y-8">
+          {featured.map((p, i) => (
+            <RevealOnScroll key={p.key} delay={i * 90}>
+              <CaseStudyCard {...p} reverse={i % 2 === 1} />
+            </RevealOnScroll>
+          ))}
+        </div>
 
-          {/* Header */}
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
-              {t("projects_title")}
-            </h2>
-            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
-              {t("projects_subtitle")}
-            </p>
+        {/* Additional */}
+        <div className="mt-20 pt-14 border-t bd">
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <div>
+              <h3 className="text-xl font-bold t-strong">{t("projects_more")}</h3>
+              <p className="t-soft text-sm mt-1">{t("projects_more_sub")}</p>
+            </div>
+            <span className="hidden sm:inline-flex shrink-0 items-center s-1 border bd t-faint text-xs font-medium py-1 px-3 rounded-full">
+              {more.length} projects
+            </span>
           </div>
-
-          {/* Latest */}
-          {latestProjects.length > 0 && (
-            <div className="mb-14">
-              <SectionLabel label={t("projects_latest")} color="from-green-500 to-emerald-400" />
-              {renderGrid(latestProjects, true)}
-            </div>
-          )}
-
-          {/* Featured */}
-          {featuredProjects.length > 0 && (
-            <div className="mb-14">
-              <SectionLabel label={t("projects_featured")} color="from-blue-500 to-cyan-400" />
-              {renderGrid(featuredProjects, false)}
-            </div>
-          )}
-
-          {/* Additional */}
-          {otherProjects.length > 0 && (
-            <div className="mb-14">
-              <SectionLabel label={t("projects_additional")} color="from-gray-500 to-gray-400" />
-              {renderGrid(otherProjects, false)}
-            </div>
-          )}
-
-          {/* CTA */}
-          <div className="text-center">
-            <div className="glass-strong p-8 rounded-2xl max-w-2xl mx-auto hover:-translate-y-1 transition-all duration-300">
-              <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                {t("projects_cta_title")}
-              </h3>
-              <p className="text-gray-400 mb-6">{t("projects_cta_text")}</p>
-              <a
-                href="#contact"
-                className="inline-block bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-8 rounded-xl font-medium hover:scale-105 hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] transition-all duration-300"
-              >
-                {t("projects_cta_button")}
-              </a>
-            </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {more.map((p, i) => (
+              <RevealOnScroll key={p.key} delay={(i % 3) * 90} className="h-full">
+                <ProjectCard {...p} />
+              </RevealOnScroll>
+            ))}
           </div>
+        </div>
 
+        {/* CTA */}
+        <div className="mt-16 panel-strong p-8 md:p-10 rounded-2xl text-center">
+          <h3 className="text-2xl font-bold mb-3 t-strong">{t("projects_cta_title")}</h3>
+          <p className="t-soft mb-6 max-w-lg mx-auto">{t("projects_cta_text")}</p>
+          <a
+            href="mailto:dejvikacollja@gmail.com"
+            className="group/cta inline-flex items-center gap-2 s-1 hover:s-2 border bd t-strong py-3 px-7 rounded-xl font-semibold transition-colors"
+          >
+            {t("projects_cta_button")}
+            <svg className="w-4 h-4 transition-transform duration-200 group-hover/cta:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

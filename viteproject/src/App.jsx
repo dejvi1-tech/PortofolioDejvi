@@ -1,39 +1,45 @@
 import { useState } from "react";
 import "./App.css";
-import { LoadingScreen } from "./components/LoadingScreen";
+import "./index.css";
 import { Navbar } from "./components/NavBar";
 import { MobileMenu } from "./components/MobileMenu";
 import { Home } from "./components/sections/Home";
+import { Stats } from "./components/sections/Stats";
 import { About } from "./components/sections/About";
+import { Experience } from "./components/sections/Experience";
+import { Education } from "./components/sections/Education";
 import { Projects } from "./components/sections/Projects";
-import "./index.css";
-import { Contact } from "./components/sections/Contact";
+import { Skills } from "./components/sections/Skills";
+import { Languages } from "./components/sections/Languages";
 import { Footer } from "./components/Footer";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { LanguageProvider } from "./context/LanguageContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+    <ThemeProvider>
     <LanguageProvider>
-      {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}{" "}
-      <div
-        className={`min-h-screen transition-opacity duration-700 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        } bg-black text-gray-100`}
-      >
+      <div className="min-h-screen t-body">
         <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-        <Home />
-        <About />
-        <Projects />
-        <Contact />
+        <main>
+          <Home />
+          <Stats />
+          <About />
+          <Experience />
+          <Education />
+          <Projects />
+          <Skills />
+          <Languages />
+        </main>
         <Footer />
         <ScrollToTop />
       </div>
     </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

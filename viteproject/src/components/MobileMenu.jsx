@@ -1,56 +1,71 @@
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useLanguage } from "../context/LanguageContext";
+import { ThemeToggle, LangToggle } from "./NavToggles";
+
+const SECTIONS = ["home", "about", "experience", "education", "projects", "skills", "languages", "contact"];
+const CV_URL = `${import.meta.env.BASE_URL}cv.pdf`;
 
 export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
   const active = useActiveSection();
-  const { lang, toggleLang, t } = useLanguage();
+  const { t } = useLanguage();
 
   const linkClass = (section) =>
-    `text-2xl font-semibold my-4 transform transition-all duration-300
-    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-    ${active === section ? "text-white" : "text-gray-300"}`;
+    `group relative text-2xl font-semibold my-3 transition-all duration-300
+    ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
+    ${active === section ? "text-accent" : "t-soft hover:t-strong"}`;
 
   return (
     <div
       id="mobile-menu"
-      className={`fixed top-0 left-0 w-full bg-[rgba(10,10,10,0.8)] backdrop-blur-lg z-40 flex flex-col items-center justify-center
-                     transition-all duration-300 ease-in-out
-                     ${
-                       menuOpen
-                         ? "h-screen opacity-100 pointer-events-auto"
-                         : "h-0 opacity-0 pointer-events-none"
-                     }
-                   `}
+      className={`fixed top-0 left-0 w-full bg-[var(--bg)] backdrop-blur-xl z-50 flex flex-col items-center justify-center transition-all duration-300 ease-in-out
+        ${menuOpen ? "h-screen opacity-100 pointer-events-auto" : "h-0 opacity-0 pointer-events-none"}`}
     >
       <button
         onClick={() => setMenuOpen(false)}
-        className="absolute top-6 right-6 text-white text-3xl focus:outline-none cursor-pointer"
-        aria-label="Close Menu"
+        className="absolute top-6 right-6 t-strong text-3xl focus:outline-none"
+        aria-label="Close menu"
       >
         &times;
       </button>
 
-      <a href="#home" onClick={() => setMenuOpen(false)} aria-current={active === "home" ? "page" : undefined} className={linkClass("home")}>
-        {t("nav_home")}
-      </a>
-      <a href="#about" onClick={() => setMenuOpen(false)} aria-current={active === "about" ? "page" : undefined} className={linkClass("about")}>
-        {t("nav_about")}
-      </a>
-      <a href="#projects" onClick={() => setMenuOpen(false)} aria-current={active === "projects" ? "page" : undefined} className={linkClass("projects")}>
-        {t("nav_projects")}
-      </a>
-      <a href="#contact" onClick={() => setMenuOpen(false)} aria-current={active === "contact" ? "page" : undefined} className={linkClass("contact")}>
-        {t("nav_contact")}
+      {SECTIONS.map((s, i) => (
+        <a
+          key={s}
+          href={s === "contact" ? "mailto:dejvikacollja@gmail.com" : `#${s}`}
+          onClick={() => setMenuOpen(false)}
+          aria-current={active === s ? "page" : undefined}
+          className={linkClass(s)}
+          style={{ transitionDelay: menuOpen ? `${i * 45 + 80}ms` : "0ms" }}
+        >
+          {t(`nav_${s}`)}
+          {/* animated underline grows from active / on hover */}
+          <span
+            aria-hidden="true"
+            className={`block h-0.5 rounded-full bg-accent mx-auto transition-all duration-300 ${
+              active === s ? "w-8" : "w-0 group-hover:w-8"
+            }`}
+          />
+        </a>
+      ))}
+
+      <a
+        href={CV_URL}
+        download="Dejvi-Kacollja-CV.pdf"
+        onClick={() => setMenuOpen(false)}
+        className={`mt-6 inline-flex items-center px-6 py-3 rounded-xl s-1 hover:s-2 border bd t-strong font-semibold transition-colors
+          ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+      >
+        {t("nav_cv")}
       </a>
 
-      <button
-        onClick={toggleLang}
-        className={`mt-6 px-4 py-2 text-sm font-semibold rounded-lg border border-white/20 text-gray-300 hover:text-white hover:border-blue-500/50 transition-all duration-200
-          ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
-        aria-label={`Switch to ${lang === "en" ? "German" : "English"}`}
+      <div
+        className={`mt-6 flex items-center gap-3 transition-all duration-300
+          ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        style={{ transitionDelay: menuOpen ? "520ms" : "0ms" }}
       >
-        {lang === "en" ? "Deutsch" : "English"}
-      </button>
+        <LangToggle size="lg" />
+        <ThemeToggle size="lg" />
+      </div>
     </div>
   );
 };

@@ -1,74 +1,119 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useLanguage } from "../context/LanguageContext";
+import { ThemeToggle, LangToggle } from "./NavToggles";
+
+const SECTIONS = ["about", "experience", "education", "projects", "skills", "contact"];
+const CV_URL = `${import.meta.env.BASE_URL}cv.pdf`;
 
 export const Navbar = ({ menuOpen, setMenuOpen }) => {
   const active = useActiveSection();
-  const { lang, toggleLang, t } = useLanguage();
-  const [scrollPct, setScrollPct] = useState(0);
+  const { t, lang } = useLanguage();
+
+  const [hovered, setHovered] = useState(null);
+  const [pill, setPill] = useState({ left: 0, width: 0, opacity: 0 });
+  const listRef = useRef(null);
+  const itemRefs = useRef({});
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const el = document.documentElement;
-      const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
-      setScrollPct(Math.min(pct, 100));
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // Position the spotlight pill under the hovered link, falling back to the active section.
+  const measure = useCallback(() => {
+    const key = hovered ?? active;
+    const el = itemRefs.current[key];
+    const list = listRef.current;
+    if (el && list) {
+      const listRect = list.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      setPill({ left: r.left - listRect.left, width: r.width, opacity: 1 });
+    } else {
+      setPill((p) => ({ ...p, opacity: 0 }));
+    }
+  }, [hovered, active]);
 
-  const navLinkClass = (section) =>
-    `relative text-sm transition-colors after:content-[''] after:absolute after:-bottom-2 after:left-0 after:h-[2px] after:w-full after:bg-blue-500 after:origin-left after:transition-transform after:duration-200 after:scale-x-0 hover:text-white ${
-      active === section ? "text-white after:scale-x-100" : "text-gray-300"
-    }`;
+  useEffect(() => {
+    measure();
+  }, [measure, lang]);
+
+  useEffect(() => {
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
 
   return (
-    <nav className="fixed top-0 w-full z-40 bg-[rgba(10,10,10,0.85)] backdrop-blur-lg border-b border-white/10 shadow-lg" aria-label="Primary navigation">
-      {/* Scroll progress bar */}
-      <div
-        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 transition-all duration-100 shadow-[0_0_6px_rgba(59,130,246,0.8)]"
-        style={{ width: `${scrollPct}%` }}
-        role="progressbar"
-        aria-valuenow={Math.round(scrollPct)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="Page scroll progress"
-      />
-
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <a href="#home" className="font-mono text-xl font-bold text-white hover:text-blue-400 transition-colors">
-            Dejvi<span className="text-blue-500">.Tech</span>
+    <nav className="fixed top-0 inset-x-0 z-40 bg-[var(--nav-bg)] backdrop-blur-xl border-b bd" aria-label="Primary navigation">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="flex items-center justify-between gap-3 h-16">
+          {/* Brand */}
+          <a href="#home" className="flex items-center gap-2.5 shrink-0 group">
+            <span
+              className="w-8 h-8 rounded-full s-1 border bd flex items-center justify-center text-xs font-bold t-strong transition-all duration-300 group-hover:border-accent group-hover:shadow-[0_0_0_3px_rgba(var(--accent),0.14)]"
+              style={{ fontFamily: "JetBrains Mono, monospace" }}
+            >
+              DK
+            </span>
+            <span className="font-semibold text-base t-strong transition-colors">
+              Dejvi Kacollja
+            </span>
           </a>
 
-          <button
-            type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            className="w-10 h-10 flex items-center justify-center rounded md:hidden text-white/90 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black z-40"
-            onClick={() => setMenuOpen((prev) => !prev)}
+          {/* Desktop links — sliding spotlight pill follows hover, rests on active */}
+          <div
+            ref={listRef}
+            className="hidden lg:flex items-center gap-0.5 relative"
+            onMouseLeave={() => setHovered(null)}
           >
-            ☰
-          </button>
-
-          <div className="hidden md:flex items-center space-x-8">
-            {["home","about","projects","contact"].map((s) => (
-              <a key={s} href={`#${s}`} aria-label={`Go to ${t(`nav_${s}`)} section`} className={navLinkClass(s)}>
+            <span
+              aria-hidden="true"
+              className="absolute top-1/2 -translate-y-1/2 h-9 rounded-full s-1 transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] pointer-events-none"
+              style={{ left: pill.left, width: pill.width, opacity: pill.opacity }}
+            />
+            {SECTIONS.map((s) => (
+              <a
+                key={s}
+                ref={(el) => (itemRefs.current[s] = el)}
+                href={s === "contact" ? "mailto:dejvikacollja@gmail.com" : `#${s}`}
+                onMouseEnter={() => setHovered(s)}
+                aria-current={active === s ? "page" : undefined}
+                className={`relative z-10 px-3.5 py-2 rounded-full text-[15px] font-medium transition-colors duration-200 ${
+                  active === s ? "text-accent" : "t-soft hover:t-strong"
+                }`}
+              >
                 {t(`nav_${s}`)}
               </a>
             ))}
+          </div>
 
-            <button
-              onClick={toggleLang}
-              className="ml-2 px-3 py-1.5 text-xs font-semibold rounded-lg border border-white/20 text-gray-300 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
-              aria-label={`Switch to ${lang === "en" ? "German" : "English"}`}
+          {/* Right cluster */}
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+
+            <div className="hidden sm:block">
+              <LangToggle />
+            </div>
+
+            <a
+              href={CV_URL}
+              download="Dejvi-Kacollja-CV.pdf"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl s-1 hover:s-2 border bd hover:border-accent t-strong transition-all duration-200"
             >
-              {lang === "en" ? "🇩🇪 DE" : "🇬🇧 EN"}
+              {t("nav_cv")}
+            </a>
+
+            {/* Mobile toggle */}
+            <button
+              type="button"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg t-strong hover:s-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
           </div>
         </div>

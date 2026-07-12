@@ -2,25 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Set theme before paint to avoid a flash of the wrong theme -->
+    <script>
+      try {
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark");
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Dejvi Kacollja - Front-End Engineer & IT Professional based in Germany. React, TypeScript, IT Support. Portfolio with projects, experience, and contact." />
+
+    <!-- Primary SEO -->
+    <title>Dejvi Kacollja — Frontend Developer | React, Next.js, TypeScript</title>
+    <meta
+      name="description"
+      content="Frontend developer building fast, modern, accessible web apps with React, Next.js, TypeScript and Tailwind CSS. Founder of EsimFly.tel. Based in Munich, Germany."
+    />
     <meta name="author" content="Dejvi Kacollja" />
+    <meta name="keywords" content="Frontend Developer, React Developer, Next.js, TypeScript, Tailwind CSS, JavaScript, Web Developer, Munich, Germany, Developer Portfolio" />
     <meta name="theme-color" content="#0a0a0a" />
-    <meta property="og:title" content="Dejvi Kacollja | Front-End Engineer & IT Professional" />
-    <meta property="og:description" content="Front-End Engineer & IT Professional based in Germany. React, TypeScript, TailwindCSS, IT Support & System Administration." />
+    <link rel="canonical" href="https://dejvikacollja.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Dejvi Kacollja — Frontend Developer | React, Next.js, TypeScript" />
+    <meta
+      property="og:description"
+      content="Frontend developer building fast, modern web apps with React, Next.js & TypeScript. Founder of EsimFly.tel. Based in Munich, Germany."
+    />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://dejvi.tech/" />
+    <meta property="og:url" content="https://dejvikacollja.com/" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="de_DE" />
-    <meta property="og:image" content="/vite.svg" />
-    <title>Dejvi Kacollja | Front-End Engineer & IT Professional</title>
+    <!-- TODO: add a proper 1200x630 social preview image at public/og-image.png and update this URL -->
+    <meta property="og:image" content="https://dejvikacollja.com/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dejvi Kacollja — Frontend Developer | React, Next.js, TypeScript" />
+    <meta name="twitter:description" content="Frontend developer — fast, modern web apps. React, Next.js, TypeScript, Tailwind. Founder of EsimFly.tel. Based in Munich, Germany." />
+    <meta name="twitter:image" content="https://dejvikacollja.com/og-image.png" />
+
+    <!-- Structured data: Person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dejvi Kacollja",
+        "jobTitle": "Frontend Developer",
+        "description": "Frontend developer building fast, modern, accessible web apps with React, Next.js, TypeScript and Tailwind CSS. Founder of EsimFly.tel.",
+        "url": "https://dejvikacollja.com/",
+        "email": "mailto:dejvikacollja@gmail.com",
+        "knowsLanguage": ["en", "de", "sq"],
+        "sameAs": [
+          "https://github.com/dejvi1-tech",
+          "https://www.linkedin.com/in/dejvi-kacollja/"
+        ],
+        "knowsAbout": ["React", "Next.js", "TypeScript", "Tailwind CSS", "JavaScript", "HTML", "CSS", "Node.js", "Supabase"]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

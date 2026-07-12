@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Set theme before paint to avoid a flash of the wrong theme -->
+    <script>
+      try {
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "dark");
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dejvi Kacollja — Mobile Apps | iOS App Store</title>
+    <meta
+      name="description"
+      content="iOS apps designed and built by Dejvi Kacollja with React Native and Swift & SwiftUI — shipped to the App Store."
+    />
+    <link rel="canonical" href="https://apps.dejvikacollja.com/" />
+    <meta name="theme-color" content="#070b14" />
+    <meta property="og:title" content="Dejvi Kacollja — Mobile Apps" />
+    <meta property="og:url" content="https://apps.dejvikacollja.com/" />
+    <meta property="og:description" content="iOS apps shipped to the App Store — built with React Native and Swift & SwiftUI." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/apps/main.jsx"></script>
+  </body>
+</html>

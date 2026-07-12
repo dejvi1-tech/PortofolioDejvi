@@ -18,5 +18,14 @@ export default defineConfig(({ command, mode }) => {
         '@': path.resolve(__dirname, 'viteproject/src'),
       },
     },
+    build: {
+      rollupOptions: {
+        input: {
+          // Multi-page: main portfolio + standalone apps page
+          main: path.resolve(__dirname, 'viteproject/index.html'),
+          apps: path.resolve(__dirname, 'viteproject/apps.html'),
+        },
+      },
+    },
   }
 })

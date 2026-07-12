@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 /**
  * Tracks which section is currently in view and returns its id.
- * Sections observed: #home, #about, #projects, #contact
+ * Sections observed: #home, #about, #experience, #projects, #apps, #skills, #contact
  */
 export function useActiveSection() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const sectionIds = ["home", "about", "projects", "contact"];
+    const sectionIds = ["home", "about", "experience", "education", "projects", "skills", "languages", "contact"];
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean);

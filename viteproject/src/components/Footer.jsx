@@ -16,31 +16,31 @@ const ImpressumModal = ({ open, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 id="impressum-title" className="text-2xl font-bold text-white">Impressum</h2>
+          <h2 id="impressum-title" className="text-2xl font-bold t-strong">Impressum</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-2xl"
+            className="t-soft hover:t-strong text-2xl"
             aria-label="Close Impressum"
           >
             &times;
           </button>
         </div>
-        <div className="text-gray-300 space-y-4 text-sm leading-relaxed">
+        <div className="t-body space-y-4 text-sm leading-relaxed">
           <div>
-            <h3 className="text-white font-semibold mb-1">Angaben gem. &sect; 5 TMG</h3>
+            <h3 className="t-strong font-semibold mb-1">Angaben gem. &sect; 5 TMG</h3>
             <p>Dejvi Kacollja</p>
-            <p>Germany</p>
+            <p>Albanien (offen f&uuml;r Relocation nach M&uuml;nchen)</p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">Kontakt</h3>
+            <h3 className="t-strong font-semibold mb-1">Kontakt</h3>
             <p>E-Mail: Dejvikacollja@gmail.com</p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">Verantwortlich f&uuml;r den Inhalt gem. &sect; 55 Abs. 2 RSt</h3>
+            <h3 className="t-strong font-semibold mb-1">Verantwortlich f&uuml;r den Inhalt gem. &sect; 55 Abs. 2 RSt</h3>
             <p>Dejvi Kacollja</p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">Haftungsausschluss</h3>
+            <h3 className="t-strong font-semibold mb-1">Haftungsausschluss</h3>
             <p>
               Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehme ich keine Haftung f&uuml;r die
               Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich
@@ -68,18 +68,18 @@ const DatenschutzModal = ({ open, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 id="datenschutz-title" className="text-2xl font-bold text-white">Datenschutzerkl&auml;rung</h2>
+          <h2 id="datenschutz-title" className="text-2xl font-bold t-strong">Datenschutzerkl&auml;rung</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-2xl"
+            className="t-soft hover:t-strong text-2xl"
             aria-label="Close Privacy Policy"
           >
             &times;
           </button>
         </div>
-        <div className="text-gray-300 space-y-4 text-sm leading-relaxed">
+        <div className="t-body space-y-4 text-sm leading-relaxed">
           <div>
-            <h3 className="text-white font-semibold mb-1">1. Datenschutz auf einen Blick</h3>
+            <h3 className="t-strong font-semibold mb-1">1. Datenschutz auf einen Blick</h3>
             <p>
               Diese Website erhebt personenbezogene Daten nur im Rahmen der Kontaktaufnahme
               &uuml;ber das Kontaktformular. Die Datenverarbeitung erfolgt auf Grundlage von
@@ -87,12 +87,12 @@ const DatenschutzModal = ({ open, onClose }) => {
             </p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">2. Verantwortliche Stelle</h3>
+            <h3 className="t-strong font-semibold mb-1">2. Verantwortliche Stelle</h3>
             <p>Dejvi Kacollja</p>
             <p>E-Mail: Dejvikacollja@gmail.com</p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">3. Kontaktformular</h3>
+            <h3 className="t-strong font-semibold mb-1">3. Kontaktformular</h3>
             <p>
               Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben
               (Name, E-Mail-Adresse, Nachricht) zur Bearbeitung der Anfrage bei uns gespeichert.
@@ -101,15 +101,15 @@ const DatenschutzModal = ({ open, onClose }) => {
             </p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">4. Hosting</h3>
+            <h3 className="t-strong font-semibold mb-1">4. Hosting</h3>
             <p>
-              Diese Website wird &uuml;ber GitHub Pages gehostet. Beim Besuch der Website werden
+              Diese Website wird &uuml;ber Netlify gehostet. Beim Besuch der Website werden
               automatisch Informationen (z.B. IP-Adresse, Browsertyp) durch den Hosting-Anbieter
-              erfasst. Details entnehmen Sie der Datenschutzerkl&auml;rung von GitHub.
+              erfasst. Details entnehmen Sie der Datenschutzerkl&auml;rung von Netlify.
             </p>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-1">5. Ihre Rechte</h3>
+            <h3 className="t-strong font-semibold mb-1">5. Ihre Rechte</h3>
             <p>
               Sie haben das Recht auf Auskunft, Berichtigung, L&ouml;schung und Einschr&auml;nkung
               der Verarbeitung Ihrer Daten. Kontaktieren Sie uns hierf&uuml;r unter der oben
@@ -129,26 +129,26 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="border-t border-white/10 bg-black/50 backdrop-blur-sm py-8" role="contentinfo">
-        <div className="max-w-6xl mx-auto px-4">
+      <footer className="border-t bd py-8" role="contentinfo">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-gray-400 text-sm">
+            <div className="t-soft text-sm">
               &copy; {new Date().getFullYear()} Dejvi Kacollja. {t("footer_rights")}
             </div>
             <div className="flex items-center gap-6 text-sm">
               <button
                 onClick={() => setImpressumOpen(true)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="t-soft hover:t-strong transition-colors"
               >
                 Impressum
               </button>
               <button
                 onClick={() => setDatenschutzOpen(true)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="t-soft hover:t-strong transition-colors"
               >
                 Datenschutz
               </button>
-              <span className="text-gray-500">{t("footer_made")}</span>
+              <span className="t-faint">{t("footer_built")}</span>
             </div>
           </div>
         </div>
