@@ -1,12 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Brand tile: site's dark-navy gradient + periwinkle accent (matches --bg / --accent) -->
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6"/>
-      <stop offset="100%" style="stop-color:#06b6d4"/>
+      <stop offset="0%" stop-color="#1a2340"/>
+      <stop offset="55%" stop-color="#0d1424"/>
+      <stop offset="100%" stop-color="#070b14"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-    font-family="JetBrains Mono, monospace" font-weight="800" font-size="22"
-    fill="white" letter-spacing="1">DK</text>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="#bdd0ff" stroke-opacity="0.35" stroke-width="2"/>
+  <text x="50%" y="47%" dominant-baseline="central" text-anchor="middle"
+    font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="800" font-size="27"
+    fill="#dfe7ff" letter-spacing="0.5">DK</text>
+  <rect x="21" y="46" width="22" height="3.5" rx="1.75" fill="#bdd0ff"/>
 </svg>
