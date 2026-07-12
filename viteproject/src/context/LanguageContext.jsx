@@ -10,6 +10,7 @@ const translations = {
     nav_projects: "Work",
     nav_apps: "Apps",
     nav_skills: "Stack",
+    nav_languages: "Languages",
     nav_contact: "Contact",
     nav_cv: "Download CV",
 
@@ -208,6 +209,7 @@ const translations = {
     nav_projects: "Projekte",
     nav_apps: "Apps",
     nav_skills: "Stack",
+    nav_languages: "Sprachen",
     nav_contact: "Kontakt",
     nav_cv: "Lebenslauf",
 
